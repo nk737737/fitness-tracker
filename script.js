@@ -12,12 +12,14 @@ const searchWorkoutBtn = document.querySelector("#searchWorkoutBtn");
 const searchResult = document.querySelector("#searchResult");
 const sortWorkouts = document.querySelector("#sortWorkouts");
 const filterType = document.getElementById("filterType");
+const searchInput = document.querySelector("#searchWorkouts");
 
 function renderWorkouts() {
 const selectedSort = sortWorkouts.value;
     console.log(selectedSort);
-    const sortedWorkouts = [...workouts];
 
+
+    const sortedWorkouts = [...workouts];
     if (selectedSort === "asc") {
         sortedWorkouts.sort((a, b) => a.duration - b.duration);
     }
@@ -36,14 +38,25 @@ const selectedSort = sortWorkouts.value;
 });
 
   const selectedType = filterType.value;
+  console.log("Selected type:", selectedType);
+
     console.log(selectedType);
     let filteredWorkouts = [...workouts];
+
+    const searchText = searchInput.value.toLowerCase();
 
     if (selectedType !== "all") {
         filteredWorkouts = filteredWorkouts.filter (
             (workout) => workout.type === selectedType
         );
     }
+
+    filteredWorkouts = filteredWorkouts.filter(function (workout) {
+        return workout.notes.toLowerCase().includes(searchText);
+    });
+
+    console.log(filteredWorkouts);
+
     console.log("All workouts:", workouts);
     console.log("Filtered workouts:", filteredWorkouts);
 
@@ -54,7 +67,10 @@ const selectedSort = sortWorkouts.value;
         );
 
         if (listItem) {
-            if (selectedType === "all" || selectedType === workout.type) {
+            const isVisible = filteredWorkouts.some(function (item) {
+            return item.id === workout.id;
+});
+            if (isVisible) {
                 listItem.style.display = "";
             } else {
                 listItem.style.display = "none";
@@ -71,6 +87,10 @@ sortWorkouts.addEventListener("change", function () {
 
 
 filterType.addEventListener("change", function () {
+    renderWorkouts();
+});
+
+searchInput.addEventListener("input", function () {
     renderWorkouts();
 });
 
@@ -117,6 +137,12 @@ if (!isValidDuration(Number(durationInput.value))) {
 
 
 const selectedDate = workoutDate.value;
+
+if (selectedDate === "") {
+    alert("Please select a workout date.");
+    return;
+}
+
 const today = new Date(); 
 const selectedDateObject = new Date(selectedDate);
 
@@ -185,6 +211,7 @@ deleteButton.addEventListener("click", function () {
 runningTime.textContent = newRunningTime + " min";
 
 });
+
 
 workoutList.append(listItem);
     renderWorkouts();
