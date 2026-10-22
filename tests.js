@@ -47,3 +47,47 @@ function isValidWorkoutDate(date) {
  console.assert(isValidWorkoutDate("2026-09-29") === true,
     "Bug: Today's date should be valid"
 );
+
+
+const practiceWorkouts = [
+  { id: 1, type: "running", duration: 30 },
+  { id: 2, type: "strength", duration: 45 },
+  { id: 3, type: "running", duration: 60 },
+  { id: 4, type: "strength", duration: 20 }
+];
+
+const workoutSummaries = practiceWorkouts.map(function (item) {
+    return `${item.type} - ${item.duration} min`;
+});
+console.log(workoutSummaries);
+
+
+const strengthWorkoutsPractice = practiceWorkouts.filter(function (item) {
+return item.type === "strength";
+});
+console.log(strengthWorkoutsPractice);
+
+
+const foundWorkoutPractice = practiceWorkouts.find(function (item) {
+    return item.id === 3;
+});
+console.log(foundWorkoutPractice);
+
+
+const totalDurationPractice = practiceWorkouts.reduce(function (sum, item) {
+    return sum + item.duration;
+}, 0);
+console.log(totalDurationPractice);
+
+
+const runningWorkoutsPractice = practiceWorkouts.filter(function (item) {
+        return item.type === "running";
+});
+
+
+const totalRunningDurationPractice = runningWorkoutsPractice.reduce(function (sum, item) {
+    return sum + item.duration;
+}, 0);
+console.log(totalRunningDurationPractice);
+console.log(practiceWorkouts);
+console.log(runningWorkoutsPractice);

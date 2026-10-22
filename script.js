@@ -13,10 +13,16 @@ const searchResult = document.querySelector("#searchResult");
 const sortWorkouts = document.querySelector("#sortWorkouts");
 const filterType = document.getElementById("filterType");
 const searchInput = document.querySelector("#searchWorkouts");
+const emptyMessage = document.querySelector("#emptyMessage");
+
+function getWorkoutListItem(workoutId) {
+    return document.querySelector(
+        `#workoutList li[data-id="${workoutId}"]`
+    );
+}
 
 function renderWorkouts() {
-const selectedSort = sortWorkouts.value;
-    console.log(selectedSort);
+    const selectedSort = sortWorkouts.value;
 
 
     const sortedWorkouts = [...workouts];
@@ -27,20 +33,18 @@ const selectedSort = sortWorkouts.value;
     if (selectedSort === "desc") {
         sortedWorkouts.sort((a, b) => b.duration - a.duration);
     }
-    console.log(sortedWorkouts);
+
 
     sortedWorkouts.forEach(function (workout) {
-    const listItem = document.querySelector(`#workoutList li[data-id="${workout.id}"]`);
+    const listItem = getWorkoutListItem(workout.id);
 
     if (listItem) {
         workoutList.append(listItem);
     }
 });
 
-  const selectedType = filterType.value;
-  console.log("Selected type:", selectedType);
+    const selectedType = filterType.value;
 
-    console.log(selectedType);
     let filteredWorkouts = [...workouts];
 
     const searchText = searchInput.value.toLowerCase();
@@ -55,16 +59,15 @@ const selectedSort = sortWorkouts.value;
         return workout.notes.toLowerCase().includes(searchText);
     });
 
-    console.log(filteredWorkouts);
-
-    console.log("All workouts:", workouts);
-    console.log("Filtered workouts:", filteredWorkouts);
+    if (filteredWorkouts.length === 0) {
+    emptyMessage.textContent = "No workouts found";
+        } else {
+            emptyMessage.textContent = "";
+        }
 
     workouts.forEach(function (workout) {
 
-        const listItem = document.querySelector (
-            `#workoutList li[data-id="${workout.id}"]`
-        );
+    const listItem = getWorkoutListItem(workout.id);
 
         if (listItem) {
             const isVisible = filteredWorkouts.some(function (item) {
@@ -210,11 +213,20 @@ deleteButton.addEventListener("click", function () {
 
 runningTime.textContent = newRunningTime + " min";
 
+    const strengthOnly = workouts.filter(function (item) {
+        return item.type === "strength";
+    });
+        strengthWorkouts.textContent = strengthOnly.length;
 });
 
 
 workoutList.append(listItem);
     renderWorkouts();
+
+    workoutType.value = "";
+    durationInput.value = "";
+    workoutDate.value = "";
+    workoutNotes.value = "";
 });
 
 
