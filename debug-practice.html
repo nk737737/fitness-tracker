@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Debugging Practice</title>
+</head>
+<body>
+  <h1>JavaScript Debugging</h1>
+  <button id="testBtn">Test Workout</button>
+
+  <script>
+    const workouts = [
+  { id: 1, type: "running", duration: 30 },
+  { id: 2, type: "strength", duration: 45 },
+  { id: 3, type: "running", duration: 20 }
+];
+
+function calculateRunningTime() {
+  const runningWorkouts = workouts.filter(function(workout) {
+    return workout.type === "running";
+  });
+
+  const total = runningWorkouts.reduce(function(sum, workout) {
+    return sum + workout.duration;
+  }, 0);
+
+  return total;
+}
+
+function updateStats() {
+  const runningTime = calculateRunningTime();
+  const runningCount = workouts.filter(function(item) {
+  return item.type === "running";
+}).length;
+
+const averageTime = runningCount > 0
+  ? runningTime / runningCount
+  : 0;
+
+  console.log("Running time:", runningTime);
+  console.log("Average running duration:", averageTime);
+}
+
+document.querySelector("#testBtn")
+  .addEventListener("click", updateStats);
+  </script>
+</body>
+</html>

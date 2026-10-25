@@ -14,6 +14,7 @@ const sortWorkouts = document.querySelector("#sortWorkouts");
 const filterType = document.getElementById("filterType");
 const searchInput = document.querySelector("#searchWorkouts");
 const emptyMessage = document.querySelector("#emptyMessage");
+const summaryType = document.querySelector("#summaryType");
 
 function getWorkoutListItem(workoutId) {
     return document.querySelector(
@@ -97,6 +98,36 @@ searchInput.addEventListener("input", function () {
     renderWorkouts();
 });
 
+function updateWorkoutSummary() {
+    const selectedType = summaryType.value;
+    console.log(selectedType);
+const summaryWorkouts = workouts.filter(function (workout) {
+    return selectedType === "all" || workout.type === selectedType;
+});
+    console.log(summaryWorkouts);
+
+    const count = summaryWorkouts.length;
+console.log(count);
+
+document.getElementById("summaryCount").textContent = count;
+
+const totalDuration = summaryWorkouts.reduce(function (total, item) {
+    return total + item.duration;
+}, 0);
+console.log(totalDuration);
+
+document.getElementById("summaryDuration").textContent = totalDuration + " min";
+
+let averageDuration = 0;
+if(count > 0) {
+averageDuration = totalDuration / count;
+}
+document.getElementById("summaryAverage").textContent = averageDuration + " min";
+}
+
+summaryType.addEventListener("change", function() {
+updateWorkoutSummary();
+});
 
 function isValidDuration(duration) {
     return duration >= 1 && duration <= 180;
@@ -175,6 +206,9 @@ newWorkoutId ++;
 console.log(workout);
 
 workouts.push(workout);
+
+updateWorkoutSummary();
+
 if (workout.type === "running") {
     totalRunningMinutes += workout.duration;
     runningTime.textContent = totalRunningMinutes + " min";
@@ -202,6 +236,10 @@ deleteButton.addEventListener("click", function () {
     workouts = workouts.filter(function (item) {
     return item !== workout;
 });
+ renderWorkouts();
+
+updateWorkoutSummary();
+
      totalWorkouts.textContent = workouts.length;
 
      const newRunningTime = workouts.filter(function (item) {
@@ -212,16 +250,18 @@ deleteButton.addEventListener("click", function () {
 }, 0);
 
 runningTime.textContent = newRunningTime + " min";
+totalRunningMinutes = newRunningTime;
 
     const strengthOnly = workouts.filter(function (item) {
         return item.type === "strength";
     });
-        strengthWorkouts.textContent = strengthOnly.length;
+        strengthWorkouts.textContent = strengthOnly.length;   
 });
 
 
 workoutList.append(listItem);
     renderWorkouts();
+
 
     workoutType.value = "";
     durationInput.value = "";

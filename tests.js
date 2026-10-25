@@ -36,16 +36,35 @@ function isValidWorkoutDate(date) {
     return selectedDateObject <= today;
 }
 
- console.assert(isValidWorkoutDate("2026-09-28") === true,
-    "Bug: Past date should be valid"
+const today = new Date();
+
+const yesterday = new Date(today);
+yesterday.setDate(today.getDate() - 1);
+
+const tomorrow = new Date(today);
+tomorrow.setDate(today.getDate() + 1);
+
+function formatLocalDate(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}
+
+console.assert(
+  isValidWorkoutDate(formatLocalDate(yesterday)) === true,
+  "Bug: Past date should be valid"
 );
 
- console.assert(isValidWorkoutDate("2026-09-30") === false,
-    "Bug: Future date should be invalid"
+console.assert(
+  isValidWorkoutDate(formatLocalDate(today)) === true,
+  "Bug: Today's date should be valid"
 );
 
- console.assert(isValidWorkoutDate("2026-09-29") === true,
-    "Bug: Today's date should be valid"
+console.assert(
+  isValidWorkoutDate(formatLocalDate(tomorrow)) === false,
+  "Bug: Future date should be invalid"
 );
 
 
