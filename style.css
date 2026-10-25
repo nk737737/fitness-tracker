@@ -10,14 +10,68 @@ body {
 
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
 }
 
 
-.stats-grid > div {
+.stats-grid > div, .summary-grid > div {
     background-color: white;
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.workout-controls {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.workout-controls > div {
+    flex-direction: column;
+    display: flex;
+    gap: 8px;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.workout-form {
+    flex-direction: column;
+    display: flex;
+    gap: 20px;
+
+}
+
+.workout-form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.workout-form input,
+.workout-form select,
+.workout-form textarea {
+   padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+#addWorkoutBtn {
+    align-self: center;
+    padding: 12px 24px;
 }
