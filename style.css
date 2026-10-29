@@ -13,7 +13,7 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     margin: 0;
-    padding: 40px;
+    padding: 1rem;
 }
 
 
@@ -35,12 +35,30 @@ body {
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+
+    .workout-controls {
+        flex-direction: row;
+    }
+
+    .workout-controls > div {
+        width: auto;
+    }
+
+    body {
+        padding: 2.5rem;
+    }
 }
 
 .workout-controls > div {
     flex-direction: column;
     display: flex;
     gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .summary-grid {
@@ -83,6 +101,8 @@ header {
 #addWorkoutBtn {
     align-self: center;
     padding: 12px 24px;
+    width: 100%;
+    max-width: 300px;
 }
 
 #totalWorkouts, 
