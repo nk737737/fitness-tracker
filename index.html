@@ -91,10 +91,10 @@
     </section>
     <section>
         <h2>Add Workout</h2>
-<div class="workout-form">
+<form class="workout-form">
     <div>
 <label for="workoutType">Workout Type</label>
-<select id="workoutType">
+<select id="workoutType" required>
     <option value="">Select workout</option>
     <option value="running">Running</option>
     <option value="strength">Strength</option>
@@ -104,21 +104,20 @@
 </div>
 <div>
 <label for="duration">Duration (minutes)</label>
-<input type="number" id="duration" min="1" placeholder="e.g. 30">
+<input type="number" id="duration" min="1" placeholder="e.g. 30" required>
 </div>
 <div>
 <label for="workoutDate">Workout Date</label>
-<input type="date" id="workoutDate">
+<input type="date" id="workoutDate" required>
 </div>
 <div>
-<label for="workoutNotes">Notes (optional)</label>
+<label for="workoutNotes">Notes(optional)</label>
 <textarea id="workoutNotes" rows="3" placeholder="How did your workout go?"></textarea>
-</div>        
-<button id="addWorkoutBtn">Add Workout</button>
-        </div>
+</div>
+<button type="button" id="addWorkoutBtn">Add Workout</button>
+</form>
     </section>
 </main>
-
 <script src="script.js"></script>
 <script src="tests.js"></script>
 </body>

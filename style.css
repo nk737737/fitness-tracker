@@ -1,6 +1,6 @@
 :root {
     --background-color: #f5f7fb;
-    --text-color: #7f8590;
+   --text-color: #243047;
     --card-padding: 20px;
     --card-border-radius: 12px;
     --card-background: rgb(242, 241, 247);
@@ -139,4 +139,10 @@ header {
     border-radius: 12px;
     padding: 8px 14px;
     cursor: pointer;
+}
+
+input:focus-visible, 
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid #2563eb;
 }
