@@ -6,7 +6,15 @@ const workoutType = document.querySelector("#workoutType");
 const durationInput = document.querySelector("#duration");
 const workoutDate = document.querySelector("#workoutDate");
 const workoutNotes = document.querySelector("#workoutNotes");
+
 let workouts = [];
+const savedWorkouts = localStorage.getItem("workouts");
+if (savedWorkouts !== null) {
+    workouts = JSON.parse(savedWorkouts);
+}
+
+console.log("Restored workouts:", workouts);
+
 const searchWorkoutId = document.querySelector("#searchWorkoutId");
 const searchWorkoutBtn = document.querySelector("#searchWorkoutBtn");
 const searchResult = document.querySelector("#searchResult");
@@ -16,10 +24,56 @@ const searchInput = document.querySelector("#searchWorkouts");
 const emptyMessage = document.querySelector("#emptyMessage");
 const summaryType = document.querySelector("#summaryType");
 
+
 function getWorkoutListItem(workoutId) {
     return document.querySelector(
         `#workoutList li[data-id="${workoutId}"]`
     );
+}
+
+
+function createWorkoutListItem(workout) {
+    const listItem = document.createElement("li");
+    listItem.dataset.id = workout.id;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+
+    listItem.textContent = workout.type + " - " + workout.duration + " min";
+    listItem.append(deleteButton);
+
+    deleteButton.addEventListener("click", function () {
+    console.log("Delete button clicked");
+    listItem.remove();
+    workouts = workouts.filter(function (item) {
+    return item !== workout;
+});
+
+localStorage.setItem("workouts", JSON.stringify(workouts));
+
+ renderWorkouts();
+
+updateWorkoutSummary();
+
+     totalWorkouts.textContent = workouts.length;
+
+     const newRunningTime = workouts.filter(function (item) {
+    return item.type === "running";
+})
+    .reduce(function (total, item) {
+        return total + item.duration; 
+}, 0);
+
+runningTime.textContent = newRunningTime + " min";
+totalRunningMinutes = newRunningTime;
+
+    const strengthOnly = workouts.filter(function (item) {
+        return item.type === "strength";
+    });
+        strengthWorkouts.textContent = strengthOnly.length;   
+});
+    
+    return listItem;
 }
 
 function renderWorkouts() {
@@ -36,12 +90,14 @@ function renderWorkouts() {
     }
 
 
-    sortedWorkouts.forEach(function (workout) {
-    const listItem = getWorkoutListItem(workout.id);
+sortedWorkouts.forEach(function (workout) {
+    let listItem = getWorkoutListItem(workout.id);
 
-    if (listItem) {
-        workoutList.append(listItem);
+    if (!listItem) {
+        listItem = createWorkoutListItem(workout);
     }
+
+    workoutList.append(listItem);
 });
 
     const selectedType = filterType.value;
@@ -142,7 +198,10 @@ console.log(strengthWorkouts);
 
 let totalStrengthWorkouts = 0;
 const workoutList = document.querySelector("#workoutList");
-let newWorkoutId = 1;
+
+let newWorkoutId = workouts.length > 0
+    ? Math.max(...workouts.map(workout => workout.id)) + 1
+    : 1;
 
 addWorkoutBtn.addEventListener("click", function () {
     if (workoutType.value === "") {
@@ -206,6 +265,7 @@ newWorkoutId ++;
 console.log(workout);
 
 workouts.push(workout);
+localStorage.setItem("workouts", JSON.stringify(workouts));
 
 updateWorkoutSummary();
 
@@ -222,45 +282,9 @@ if (workout.type === "strength") {
     strengthWorkouts.textContent = totalStrengthWorkouts;
 }
 
-const listItem = document.createElement("li");
-listItem.dataset.id = workout.id;
-const deleteButton = document.createElement("button");
-deleteButton.textContent = "Delete";
-
-listItem.textContent = workout.type + " - " + workout.duration + " min";
-listItem.append(deleteButton);
-
-deleteButton.addEventListener("click", function () {
-    console.log("Delete button clicked");
-    listItem.remove();
-    workouts = workouts.filter(function (item) {
-    return item !== workout;
-});
- renderWorkouts();
-
-updateWorkoutSummary();
-
-     totalWorkouts.textContent = workouts.length;
-
-     const newRunningTime = workouts.filter(function (item) {
-    return item.type === "running";
-})
-    .reduce(function (total, item) {
-        return total + item.duration; 
-}, 0);
-
-runningTime.textContent = newRunningTime + " min";
-totalRunningMinutes = newRunningTime;
-
-    const strengthOnly = workouts.filter(function (item) {
-        return item.type === "strength";
-    });
-        strengthWorkouts.textContent = strengthOnly.length;   
-});
-
-
+const listItem = createWorkoutListItem(workout);
 workoutList.append(listItem);
-    renderWorkouts();
+renderWorkouts();
 
 
     workoutType.value = "";
@@ -292,3 +316,25 @@ searchWorkoutBtn.addEventListener("click", function () {
 
     console.log(foundWorkout);
 });
+
+renderWorkouts();
+
+const newRunningTime = workouts.filter(function (item) {
+    return item.type === "running";
+})
+.reduce(function (total, item) {
+    return total + item.duration;
+}, 0);
+
+runningTime.textContent = newRunningTime + " min";
+totalRunningMinutes = newRunningTime;
+
+
+const newStrengthWorkouts = workouts.filter(function (item) {
+    return item.type === "strength";
+});
+
+strengthWorkouts.textContent = newStrengthWorkouts.length;
+totalStrengthWorkouts = newStrengthWorkouts.length;
+
+updateWorkoutSummary();
