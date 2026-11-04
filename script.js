@@ -23,7 +23,8 @@ const filterType = document.getElementById("filterType");
 const searchInput = document.querySelector("#searchWorkouts");
 const emptyMessage = document.querySelector("#emptyMessage");
 const summaryType = document.querySelector("#summaryType");
-
+const apiStatus = document.getElementById("apiStatus");
+const loadDataBtn = document.getElementById("loadDataBtn");
 
 function getWorkoutListItem(workoutId) {
     return document.querySelector(

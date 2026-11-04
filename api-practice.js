@@ -1,16 +1,21 @@
-const request = fetch("https://jsonplaceholder.typicode.com/posts/1");
-    console.log(request);
+//const request = fetch("https://jsonplaceholder.typicode.com/posts/1");
+    //console.log(request);
 
-    request.then(function (response) {
-        console.log(response);
-        return response.json();
-    })
-    .then(function (data){
-        console.log(data)
-    })
-    ;
+    //request.then(function (response) {
+        //console.log(response);
+        //return response.json();
+    //})
+    //.then(function (data){
+        //console.log(data)
+    //});
+
+
+
+
 
     async function loadPost() {
+         apiStatus.textContent = "Loading...";
+
         try {
             console.log("Loading...");
        const response = await fetch("https://jsonplaceholder.typicode.com/posts/1");
@@ -24,10 +29,16 @@ const request = fetch("https://jsonplaceholder.typicode.com/posts/1");
        const data = await response.json(); 
 
        console.log(data);
-       console.log("Loading complete");
+       apiStatus.textContent = "Success! Data loaded.";
         } catch (error) {
             console.error(error);
-        }
+            apiStatus.textContent = "Error! Failed to load data.";
+        } finally {
+        console.log("Loading complete");
+    }
     }
 
+    loadDataBtn.addEventListener("click", function () {
+        console.log(loadDataBtn);
     loadPost();
+    });
