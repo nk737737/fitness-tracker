@@ -141,6 +141,10 @@ sortedWorkouts.forEach(function (workout) {
 }
 
 
+function updateDashboardStats() {
+    totalWorkouts.textContent = workouts.length;
+} 
+
 sortWorkouts.addEventListener("change", function () {
    renderWorkouts();
 
@@ -193,9 +197,11 @@ function isValidDuration(duration) {
 const totalWorkouts = document.querySelector("#totalWorkouts");
 const runningTime = document.querySelector("#runningTime");
 let totalRunningMinutes = 0;
+
 const strengthWorkouts = document.querySelector("#strengthWorkouts");
 
 console.log(strengthWorkouts);
+updateDashboardStats();
 
 let totalStrengthWorkouts = 0;
 const workoutList = document.querySelector("#workoutList");
