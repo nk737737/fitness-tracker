@@ -12,6 +12,7 @@ A workout tracking web application built with HTML, CSS, and JavaScript.
 - Sort workouts by duration.
 - View workout statistics and summaries.
 - Responsive layout using CSS Flexbox and Grid.
+- Workouts are saved in localStorage and remain available after refreshing the page.
 
 ## Technologies Used
 
