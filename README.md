@@ -23,15 +23,12 @@ A workout tracking web application built with HTML, CSS, and JavaScript.
 
 ## Project Status
 
-In development.
-
-Currently improving the user interface, responsive design, and accessibility.
+The core features of Fitness Tracker are implemented and working. The project is under active development, with further improvements planned.
 
 ## Future Improvements
 
-- Improve the layout for different screen sizes.
-- Add local storage to save workouts between sessions.
-- Improve accessibility and form handling.
+- Add the ability to edit existing workouts.
+- Visualize workout statistics using charts.
 - Convert the application into a Progressive Web App (PWA).
 
 ## Author
