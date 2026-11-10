@@ -2,6 +2,11 @@
 
 A workout tracking web application built with HTML, CSS, and JavaScript.
 
+
+## Live Demo
+
+Try the application here: https://nk737737.github.io/fitness-tracker/
+
 ## Features
 
 - Add workouts with a type, duration, date, and optional notes.
